@@ -5,19 +5,79 @@
 }
 
 :root {
-  --main-color: rgba(255, 255, 255, 0.7);
+  --input-bg: #f7f8f9;
+  --input-boder: #d6e3e7;
+  --h1-color: #21485a;
+  --h2-color: #21485a;
+  --btn-color: #21485a;
+  --btn-text-color: #ffffff;
+  --btn-hover-color: #28586e;
 }
 
-body {
-  background-color: #121212;
+h1 {
+  color: var(--h1-color);
 }
 
-h1,
-label {
-  color: var(--main-color);
+h2 {
+  color: var(--h2-color);
 }
 
-input[type=text] {
-  padding: .3rem;
+input[type="email"],
+input[type="password"],
+input[type="text"],
+input[type="date"] {
+  font-size: 1rem;
   width: 100%;
+  padding: 0.5rem;
+  border: 2px solid var(--input-boder);
+  border-radius: 5px;
+  background-color: var(--input-bg);
+}
+
+input[type="email"]::placeholder,
+input[type="password"]::placeholder,
+input[type="text"]::placeholder,
+input[type="date"]::placeholder {
+  color: var(--input-boder);
+  opacity: 1;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus,
+input[type="date"]:focus {
+  outline: none;
+}
+
+button,
+input[type="submit"] {
+  font-size: 1rem;
+  padding: .5rem;
+  border: none;
+  width: 10rem;
+  background-color: var(--btn-color);
+  border: 2px solid var(--btn-color);
+  color: var(--btn-text-color);
+}
+
+button:hover,
+input[type="submit"]:hover {
+  background-color: var(--btn-hover-color);
+  border: 2px solid var(--btn-hover-color);
+}
+
+button:active,
+input[type="submit"]:active {
+  background-color: var(--btn-text-color);
+  color: var(--btn-color);
+  border: 2px solid var(--btn-color);
+}
+
+/* Margin class styles*/
+.mg-bottom-2 {
+  margin-bottom: 2rem;
+}
+
+.mg-top-bottom-2 {
+  margin: 2rem 0;
 }

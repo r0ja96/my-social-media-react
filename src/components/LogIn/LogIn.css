@@ -1,0 +1,16 @@
+#logIn {
+    padding: 1rem;
+    text-align: center;
+}
+
+#logIn>form {
+    max-width: 600px;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+.buttonDiv {
+    display: flex;
+    justify-content: space-between;
+
+}

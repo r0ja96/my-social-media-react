@@ -1,0 +1,20 @@
+#logInPage {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100vh;
+}
+
+#imgDiv {
+    background: url('https://images.unsplash.com/photo-1512850183-6d7990f42385?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80') no-repeat;
+    background-size: cover;
+}
+
+@media only screen and (max-width: 768px) {
+    #logInPage {
+        display: block;
+    }
+
+    #imgDiv {
+        display: none;
+    }
+}
