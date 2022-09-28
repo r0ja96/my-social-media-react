@@ -5,6 +5,8 @@
 }
 
 :root {
+  --success-color: rgb(17, 131, 13);
+  --error-color: rgb(150, 8, 8);
   --input-bg: #f7f8f9;
   --input-boder: #d6e3e7;
   --h1-color: #21485a;
@@ -73,11 +75,39 @@ input[type="submit"]:active {
   border: 2px solid var(--btn-color);
 }
 
-/* Margin class styles*/
+/* Utilities */
+.display-none {
+  display: none;
+}
+
+.error-message {
+  color: var(--error-color);
+}
+
+.success-message {
+  color: var(--success-color);
+}
+
+/*Dimension styles*/
+.height-2 {
+  height: 2rem;
+}
+
+/*Font styles*/
+.font-size-1-point-2 {
+  font-size: 1.2rem;
+}
+
+/* Margin styles*/
 .mg-bottom-2 {
   margin-bottom: 2rem;
 }
 
 .mg-top-bottom-2 {
   margin: 2rem 0;
+}
+
+/*Padding styles*/
+.padding-point-3 {
+  padding: .3rem;
 }
