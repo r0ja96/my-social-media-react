@@ -1,0 +1,36 @@
+#NavBar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: space-evenly;
+    height: 5rem;
+    padding: 1rem;
+    position: sticky;
+    background-color: var(--navbar-bg-color);
+    top: 0px;
+}
+
+#NavBar h1 {
+    font-size: 2rem;
+}
+
+#logoNav,
+#optionNav {
+    display: grid;
+    align-content: center;
+    justify-content: center;
+}
+
+#searchNav {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    justify-content: center;
+    align-content: center;
+    gap: .5rem
+}
+
+
+#optionNav>ul {
+    display: flex;
+    gap: 1rem;
+    list-style-type: none;
+}

@@ -1,0 +1,11 @@
+#PostPage {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 200px 1fr 200px;
+    background-color: var(--input-boder);
+}
+
+#PostPage>div {
+    height: 100%;
+    border: 1px green solid;
+}

@@ -14,6 +14,7 @@
   --btn-color: #21485a;
   --btn-text-color: #ffffff;
   --btn-hover-color: #28586e;
+  --navbar-bg-color: #ffffff;
 }
 
 h1 {
@@ -86,6 +87,12 @@ input[type="submit"]:active {
 
 .success-message {
   color: var(--success-color);
+}
+
+.profile-img-sm {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
 }
 
 /*Dimension styles*/
