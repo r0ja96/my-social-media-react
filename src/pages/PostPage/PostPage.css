@@ -9,3 +9,19 @@
     height: 100%;
     border: 1px green solid;
 }
+
+#post {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.post-sidebar>div {
+    padding: .2rem;
+}
+
+.post-sidebar h2 {
+    text-align: center;
+}

@@ -25,6 +25,10 @@ h2 {
   color: var(--h2-color);
 }
 
+p {
+  text-align: justify;
+}
+
 input[type="email"],
 input[type="password"],
 input[type="text"],
