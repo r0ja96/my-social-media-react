@@ -1,52 +1,59 @@
 import "./LogIn.css";
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import signUpApi from "../../api/signUpApi";
+import logInApi from "../../api/logInApi";
 
 function LogIn() {
-
+    const initialValue = { status: "none", message: "" }
     const [signUp, setSignUp] = useState(false);
-    const [error, setError] = useState(false);
-    const [success, setSuccess] = useState(false);
+    const [message, setMessage] = useState(initialValue);
     const birthdayInputRef = useRef();
     const navigate = useNavigate();
 
     const backToLogIn = () => {
         setSignUp(false);
-        setError(false);
+        setMessage(initialValue);
     }
 
     const goToSignUp = () => {
         setSignUp(true);
-        setError(false);
+        setMessage(initialValue);
     }
 
-    const logInForm = ({ email, password }) => {
-        if (email.value === 'admin@admin' && password.value === 'password') {
+    const logInForm = async ({ email, password }) => {
+        const response = await logInApi({
+            email: email.value,
+            password: password.value
+        });
+        if (response.status === 'Success') {
             navigate('/post');
+            console.log(response.data.token);
         } else {
-            setError(true);
+            setMessage(response);
         }
     }
 
-    const signUpForm = ({ name, lastName, birthday, email, password }) => {
-        console.log(name.value, lastName.value, birthday.value, email.value, password.value);
-        if (email.value === 'admin@admin') {
-            setError(true);
-            setSuccess(false);
-        } else {
-            setError(false);
-            setSuccess(true);
-        }
+    const signUpForm = async ({ name, lastName, birthday, email, password }) => {
+        const response = await signUpApi({
+            name: name.value,
+            lastName: lastName.value,
+            birthday: birthday.value,
+            email: email.value,
+            password: password.value
+        });
+
+        setMessage(response);
     }
 
-    const handleForm = (event) => {
+    const handleForm = async (event) => {
         event.preventDefault();
-        signUp === true ? signUpForm(event.target) : logInForm(event.target);
+        signUp === true ? await signUpForm(event.target) : await logInForm(event.target);
     }
 
     return (
         <div id="logIn">
-            <form onSubmit={(event) => { handleForm(event); }}>
+            <form onSubmit={async (event) => { await handleForm(event); }}>
                 <div className="mg-bottom-2">
                     <h1>My Social Media</h1>
                 </div>
@@ -76,8 +83,10 @@ function LogIn() {
                     <input name="password" type="password" placeholder="Password" required />
                 </div>
                 <div className="height-2 padding-point-3">
-                    <span className={error ? 'font-size-1-point-2 error-message' : 'display-none'}>{signUp ? 'Email is already registered' : 'Email or password incorrect'}</span>
-                    {signUp ? <span className={success ? 'font-size-1-point-2 success-message' : 'display-none'}>Account created!!!</span> : null}
+                    <span className={
+                        'font-size-1-point-2 ' + ((message.status === "none") ?
+                            'display-none' :
+                            (message.status === "Failed") ? 'error-message' : 'success-message')}>{message.message}</span>
                 </div>
                 {signUp === true ?
                     <div className="mg-top-bottom-2 buttonDiv">
