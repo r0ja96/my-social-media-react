@@ -1,14 +1,16 @@
 import './Profile.css';
 
-function Profile({ profileType }) {
+function Profile({ profileType, profileData }) {
 
     let profileBtn = null;
-    let description = <div><label>Alannnnnnn Rodriguezz</label></div>;
+    let description = null;
+
+    const { name } = profileData;
 
     switch (profileType) {
         case 'post':
             description = <>
-                <div><label>Alannnnnnn Rodriguezz</label></div>
+                <div><label>{name}</label></div>
                 <div><label>Online</label></div>
                 <div><label>12:00 PM 01/01/22</label></div>
             </>
@@ -23,6 +25,7 @@ function Profile({ profileType }) {
                 </>);
             break;
         case 'add':
+            description = <div><label>{name}</label></div>;
             profileBtn = (
                 <>
                     <button style={{ 'width': '50px' }}>Add</button>
@@ -30,7 +33,7 @@ function Profile({ profileType }) {
             break;
         case 'friend':
             description = <>
-                <div><label>Alannnnnnn Rodriguezz</label></div>
+                <div><label>{name}</label></div>
                 <div><label>Online</label></div>
             </>
     }

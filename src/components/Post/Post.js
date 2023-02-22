@@ -3,6 +3,7 @@ import Comment from '../Comment/Comment';
 import './Post.css';
 
 function Post() {
+
     return (
         <div className='post'>
             <div>

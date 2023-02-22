@@ -1,6 +1,19 @@
+import authApi from '../../api/authApi';
+import logOutApi from '../../api/logOutApi';
+import { useNavigate } from "react-router-dom";
 import './NavBar.css';
 
 function NavBar() {
+
+    const navigate = useNavigate();
+
+    const logOut = async () => {
+        const authData = await authApi();
+        const logOutData = await logOutApi(authData.data.accessToken);
+        document.cookie = `token=; max-age=0; path=/; samesite=strict`;
+        navigate('/');
+    }
+
     return (
         <nav id='NavBar'>
             <div id='searchNav'>
@@ -17,7 +30,7 @@ function NavBar() {
             <div id='optionNav'>
                 <ul>
                     <li><button>My profile</button></li>
-                    <li><button>Log Out</button></li>
+                    <li><button onClick={logOut}>Log Out</button></li>
                 </ul>
             </div>
         </nav>

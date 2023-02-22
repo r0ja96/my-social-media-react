@@ -1,5 +1,5 @@
 import "./LogIn.css";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import signUpApi from "../../api/signUpApi";
 import logInApi from "../../api/logInApi";
@@ -27,8 +27,8 @@ function LogIn() {
             password: password.value
         });
         if (response.status === 'Success') {
+            document.cookie = `token=${response.data.token}; max-age=${604800}; path=/; samesite=strict`;
             navigate('/post');
-            console.log(response.data.token);
         } else {
             setMessage(response);
         }
@@ -50,6 +50,12 @@ function LogIn() {
         event.preventDefault();
         signUp === true ? await signUpForm(event.target) : await logInForm(event.target);
     }
+
+    useEffect(() => {
+        if (document.cookie) {
+            navigate('/post');
+        }
+    }, [])
 
     return (
         <div id="logIn">

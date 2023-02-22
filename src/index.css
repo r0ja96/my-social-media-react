@@ -17,6 +17,10 @@
   --navbar-bg-color: #ffffff;
 }
 
+body {
+  background-color: var(--input-boder);
+}
+
 h1 {
   color: var(--h1-color);
 }

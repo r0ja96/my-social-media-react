@@ -1,7 +1,7 @@
-export default async (token) => {
+export default async (accessToken) => {
     const response = await fetch('http://localhost:4400/account/last-accounts', {
         headers: {
-            'authorization': `Bearer ${token}`
+            'authorization': `Bearer ${accessToken}`
         },
         method: 'GET'
     });
