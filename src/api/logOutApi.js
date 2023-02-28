@@ -1,12 +1,8 @@
-export default async (accessToken) => {
+export default async () => {
 
     const response = await fetch('http://localhost:4400/account/logout', {
-        headers: {
-            'Content-Type': 'application/json',
-            authorization: `Bearer ${accessToken}`
-        },
         method: 'DELETE',
-        body: JSON.stringify({ token: document.cookie.split('token=')[1] })
+        credentials: 'include',
     });
 
     return await response.json();

@@ -8,9 +8,7 @@ function NavBar() {
     const navigate = useNavigate();
 
     const logOut = async () => {
-        const authData = await authApi();
-        const logOutData = await logOutApi(authData.data.accessToken);
-        document.cookie = `token=; max-age=0; path=/; samesite=strict`;
+        const logOutData = await logOutApi();
         navigate('/');
     }
 

@@ -27,7 +27,6 @@ function LogIn() {
             password: password.value
         });
         if (response.status === 'Success') {
-            document.cookie = `token=${response.data.token}; max-age=${604800}; path=/; samesite=strict`;
             navigate('/post');
         } else {
             setMessage(response);

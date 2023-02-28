@@ -1,11 +1,18 @@
 import './Profile.css';
+import addFriendApi from '../../api/addFriendApi';
 
 function Profile({ profileType, profileData }) {
 
     let profileBtn = null;
     let description = null;
 
-    const { name } = profileData;
+    const { name, _id } = profileData;
+
+    const addFriend = async (friendID) => {
+        console.log('entro');
+        const data = await addFriendApi({ friendID });
+        console.log(data);
+    }
 
     switch (profileType) {
         case 'post':
@@ -28,7 +35,7 @@ function Profile({ profileType, profileData }) {
             description = <div><label>{name}</label></div>;
             profileBtn = (
                 <>
-                    <button style={{ 'width': '50px' }}>Add</button>
+                    <button style={{ 'width': '50px' }} onClick={() => { addFriend(_id) }}>Add</button>
                 </>)
             break;
         case 'friend':

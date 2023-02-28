@@ -1,5 +1,5 @@
 export default async (data) => {
-    const response = await fetch('http://localhost:4400/account/signin', {
+    const response = await fetch('http://localhost:4400/friend', {
         headers: {
             'Content-Type': 'application/json'
         },
