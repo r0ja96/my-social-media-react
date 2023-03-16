@@ -23,7 +23,6 @@ function PostPage() {
     useEffect(() => {
         dispatch(lastAccounts());
         dispatch(friends());
-        //console.log('entro');
     }, []);
 
     useEffect(() => {
