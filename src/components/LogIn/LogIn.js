@@ -1,8 +1,11 @@
 import "./LogIn.css";
+import Cookies from 'universal-cookie';
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import signUpApi from "../../api/signUpApi";
 import logInApi from "../../api/logInApi";
+
+const cookies = new Cookies();
 
 function LogIn() {
     const initialValue = { status: "none", message: "" }
@@ -51,7 +54,7 @@ function LogIn() {
     }
 
     useEffect(() => {
-        if (document.cookie) {
+        if (cookies.get('token')) {
             navigate('/post');
         }
     }, [])

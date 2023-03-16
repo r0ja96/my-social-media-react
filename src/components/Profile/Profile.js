@@ -1,7 +1,13 @@
 import './Profile.css';
 import addFriendApi from '../../api/addFriendApi';
+import { useDispatch, useSelector } from 'react-redux';
+import { lastAccounts, selectLastAccounts } from "../../store/reducers/lastAccountsReducer";
+import { useNavigate } from "react-router-dom";
 
 function Profile({ profileType, profileData }) {
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     let profileBtn = null;
     let description = null;
@@ -9,9 +15,12 @@ function Profile({ profileType, profileData }) {
     const { name, _id } = profileData;
 
     const addFriend = async (friendID) => {
-        console.log('entro');
         const data = await addFriendApi({ friendID });
-        console.log(data);
+        if (data.status === "Success") {
+            dispatch(lastAccounts());
+        } else if (['Token expired', 'Missing token'].includes(data.message)) {
+            navigate('/');
+        }
     }
 
     switch (profileType) {

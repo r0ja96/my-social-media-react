@@ -8,7 +8,7 @@ function NavBar() {
     const navigate = useNavigate();
 
     const logOut = async () => {
-        const logOutData = await logOutApi();
+        await logOutApi();
         navigate('/');
     }
 
