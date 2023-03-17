@@ -61,6 +61,7 @@ input[type="date"]:focus {
 }
 
 button,
+.social-media-btn,
 input[type="submit"] {
   font-size: 1rem;
   padding: .5rem;
@@ -72,12 +73,14 @@ input[type="submit"] {
 }
 
 button:hover,
+.social-media-btn:hover,
 input[type="submit"]:hover {
   background-color: var(--btn-hover-color);
   border: 2px solid var(--btn-hover-color);
 }
 
 button:active,
+.social-media-btn:active,
 input[type="submit"]:active {
   background-color: var(--btn-text-color);
   color: var(--btn-color);
@@ -85,6 +88,7 @@ input[type="submit"]:active {
 }
 
 /* Utilities */
+
 .display-none {
   display: none;
 }

@@ -1,0 +1,11 @@
+.addPost{
+    border: 2px green solid;
+    width: 100%;
+    max-width: 750px;
+    padding: 0.5rem;
+}
+
+.addPost textarea{
+    width: 100%;
+    padding: 0.5rem;
+}

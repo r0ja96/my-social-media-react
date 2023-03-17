@@ -5,7 +5,7 @@ import './Post.css';
 function Post() {
 
     return (
-        <div className='post'>
+        <div className='post'> 
             <div>
                 <Profile profileType={'post'} />
             </div>
