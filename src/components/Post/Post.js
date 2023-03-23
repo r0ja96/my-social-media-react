@@ -4,7 +4,7 @@ import './Post.css';
 
 function Post({ postData, profileData }) {
 
-    const { text } = postData;
+    const { text, imageUrl } = postData;
 
     return (
         <div className='post'>
@@ -17,7 +17,7 @@ function Post({ postData, profileData }) {
                 </p>
             </div>
             <div className='post-image'>
-                <img src='https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?w=2000' />
+                {imageUrl && <img src={imageUrl} />}
             </div>
             <div className='post-like'>
                 <button>Like</button>
