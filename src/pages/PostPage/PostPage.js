@@ -12,11 +12,14 @@ import './PostPage.css'
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import getFriendsPostApi from "../../api/getFriendsPostApi";
+
 
 function PostPage() {
 
     const [profileAdd, setProfileAdd] = useState([]);
     const [profileFriend, setProfileFriend] = useState([]);
+    const [post, setPost] = useState([]);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const lastAccountsData = useSelector(selectLastAccounts);
@@ -25,6 +28,28 @@ function PostPage() {
     useEffect(() => {
         dispatch(lastAccounts());
         dispatch(friends());
+
+        const fetch = async () => {
+            const friendsPostData = await getFriendsPostApi();
+            const { message, data, status } = friendsPostData;
+
+            if (status === "Success") {
+                const postArray = data.map((d) => {
+                    const { _id, accountID, text, image, postDate } = d;
+
+                    let date = new Date(postDate);
+                    date = date.toLocaleString();
+
+                    return <Post key={_id} postData={{ text, imageUrl: image ? `${accountID}/${image}` : null }} profileData={{ name: "admin", date }} />;
+                });
+
+                setPost(postArray)
+            } else if (['Token expired', 'Missing token'].includes(message)) {
+                navigate('/');
+            }
+        }
+
+        fetch();
     }, []);
 
     useEffect(() => {
@@ -33,6 +58,7 @@ function PostPage() {
 
             const profileArray = data.map((d) => {
                 const { _id, name, lastName } = d;
+                console.log();
                 return <Profile key={_id} profileType={'add'} profileData={{ _id, name: `${name} ${lastName}` }} />
             });
 
@@ -44,7 +70,7 @@ function PostPage() {
 
     }, [lastAccountsData]);
 
-    useEffect(()=>{
+    useEffect(() => {
         const { message, data, status } = friendsData;
         if (status === "Success") {
 
@@ -57,7 +83,7 @@ function PostPage() {
         } else if (['Token expired', 'Missing token'].includes(message)) {
             navigate('/');
         }
-    },[friendsData])
+    }, [friendsData])
 
 
     return (
@@ -74,6 +100,7 @@ function PostPage() {
                 </div>
                 <div id="post">
                     <AddPost />
+                    {post}
                 </div>
                 <div className="post-sidebar">
                     <div>

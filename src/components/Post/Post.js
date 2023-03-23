@@ -2,16 +2,18 @@ import Profile from '../Profile/Profile';
 import Comment from '../Comment/Comment';
 import './Post.css';
 
-function Post() {
+function Post({ postData, profileData }) {
+
+    const { text } = postData;
 
     return (
-        <div className='post'> 
+        <div className='post'>
             <div>
-                <Profile profileType={'post'} />
+                {true && <Profile profileType={'postFriend'} profileData={profileData} />}
             </div>
             <div>
                 <p>
-                    Qui mollit cillum ea tempor ut elit. Officia mollit amet eiusmod officia. Eu nulla deserunt nisi ad aute do incididunt fugiat. Eu sit ullamco proident ex laborum mollit in consectetur dolore fugiat ex dolore elit eiusmod.
+                    {text}
                 </p>
             </div>
             <div className='post-image'>

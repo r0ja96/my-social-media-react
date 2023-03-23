@@ -14,6 +14,7 @@ function AddPost() {
     }
 
     const addPost = async (event) => {
+
         event.preventDefault();
         const payload = {
             text: event.target.postText.value,
@@ -25,7 +26,7 @@ function AddPost() {
             const image = await fetch(imageSrc);
             const blob = await image.blob();
             console.log(blob);
-            formData.append("files", blob);
+            formData.append("image", blob);
             const blobText = await blob.text();
             payload.image = blobText;
         }

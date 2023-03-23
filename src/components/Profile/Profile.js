@@ -12,7 +12,7 @@ function Profile({ profileType, profileData }) {
     let profileBtn = null;
     let description = null;
 
-    const { name, _id } = profileData;
+    const { name, _id, date } = profileData;
 
     const addFriend = async (friendID) => {
         const data = await addFriendApi({ friendID });
@@ -39,6 +39,13 @@ function Profile({ profileType, profileData }) {
                         <a>Delete</a>
                     </div>
                 </>);
+            break;
+        case 'postFriend':
+            description = <>
+                <div><label>{name}</label></div>
+                <div><label>Online</label></div>
+                <div><label>{date}</label></div>
+            </>
             break;
         case 'add':
             description = <div><label>{name}</label></div>;

@@ -5,7 +5,7 @@ function Comment() {
     return (
         <div className='post-coment'>
             <div>
-                <Profile />
+                {false && <Profile />}
             </div>
             <div>
                 <p>Nice Pic!!</p>
