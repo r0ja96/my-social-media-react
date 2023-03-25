@@ -1,14 +1,14 @@
 import './Comment.css';
 import Profile from '../Profile/Profile';
 
-function Comment() {
+function Comment({ comment, profileData, profileType }) {
     return (
         <div className='post-coment'>
             <div>
-                {false && <Profile />}
+                <Profile profileData={profileData} profileType={profileType} />
             </div>
             <div>
-                <p>Nice Pic!!</p>
+                <p>{comment}</p>
             </div>
         </div >
     );

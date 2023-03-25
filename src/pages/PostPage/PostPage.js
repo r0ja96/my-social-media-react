@@ -7,6 +7,7 @@ import AddPost from "../../components/AddPost/AddPost";
 import { useDispatch, useSelector } from 'react-redux';
 import { lastAccounts, selectLastAccounts } from "../../store/reducers/lastAccountsReducer";
 import { friends, selectFriends } from "../../store/reducers/friendsReducer";
+import { friendsPosts, selectFriendsPosts } from "../../store/reducers/friendsPostsReducer";
 
 import './PostPage.css'
 import { useEffect, useState } from "react";
@@ -24,34 +25,34 @@ function PostPage() {
     const dispatch = useDispatch();
     const lastAccountsData = useSelector(selectLastAccounts);
     const friendsData = useSelector(selectFriends);
+    const friendsPostsData = useSelector(selectFriendsPosts);
 
     useEffect(() => {
         dispatch(lastAccounts());
         dispatch(friends());
+        dispatch(friendsPosts());
+    }, []);
 
-        const fetch = async () => {
-            const friendsPostData = await getFriendsPostApi();
-            const { message, data, status } = friendsPostData;
+    useEffect(() => {
+        const { message, data, status } = friendsPostsData;
 
-            if (status === "Success") {
-                const postArray = data.map((d) => {
-                    const { _id, text, image, postDate, account } = d;
-                    const {name, lastName} = account;
-                    
-                    let date = new Date(postDate);
-                    date = date.toLocaleString();
+        if (status === "Success") {
+            const postArray = data.map((d) => {
+                const { _id, text, image, like, postDate, account, comments } = d;
+                const { name, lastName } = account;
 
-                    return <Post key={_id} postData={{ text, imageUrl: image ? `http://localhost:4400/image/${account._id}/${image}` : null }} profileData={{ name: `${name} ${lastName}`, date }} />;
-                });
+                let date = new Date(postDate);
+                date = date.toLocaleString();
 
-                setPost(postArray)
-            } else if (['Token expired', 'Missing token'].includes(message)) {
-                navigate('/');
-            }
+                return <Post key={_id} comments={comments} postData={{ like, postID: _id, text, imageUrl: image ? `http://localhost:4400/image/${account._id}/${image}` : null }} profileData={{ name: `${name} ${lastName}`, date }} />;
+            });
+
+            setPost(postArray)
+        } else if (['Token expired', 'Missing token'].includes(message)) {
+            navigate('/');
         }
 
-        fetch();
-    }, []);
+    }, [friendsPostsData]);
 
     useEffect(() => {
         const { message, data, status } = lastAccountsData;
@@ -59,7 +60,6 @@ function PostPage() {
 
             const profileArray = data.map((d) => {
                 const { _id, name, lastName } = d;
-                console.log();
                 return <Profile key={_id} profileType={'add'} profileData={{ _id, name: `${name} ${lastName}` }} />
             });
 

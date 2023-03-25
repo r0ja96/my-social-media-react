@@ -1,10 +1,17 @@
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
 import addPostApi from '../../api/addPostApi';
+import { friendsPosts } from "../../store/reducers/friendsPostsReducer";
 import './AddPost.css';
 
 function AddPost() {
 
     const [imageSrc, setImageSrc] = useState(null);
+    const [postText, setPostText] = useState('');
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
 
     const displayImage = (e) => {
         const blob = e.target.files[0];
@@ -16,32 +23,32 @@ function AddPost() {
     const addPost = async (event) => {
 
         event.preventDefault();
-        const payload = {
-            text: event.target.postText.value,
-            image: null
-        }
 
         const formData = new FormData();
         if (imageSrc) {
             const image = await fetch(imageSrc);
             const blob = await image.blob();
-            console.log(blob);
             formData.append("image", blob);
-            const blobText = await blob.text();
-            payload.image = blobText;
         }
 
-        formData.append("text", event.target.postText.value);
+        formData.append("text", postText);
 
 
-        await addPostApi(formData);
-
+        const addPostData = await addPostApi(formData);
+        const { message, data, status } = addPostData;
+        if (status === "Success") {
+            setImageSrc(null);
+            setPostText('');
+            dispatch(friendsPosts());
+        } else if (['Token expired', 'Missing token'].includes(message)) {
+            navigate('/');
+        }
     }
 
     return (
         <div className="addPost">
             <form onSubmit={addPost}>
-                <textarea name="postText" placeholder='Add a post...' rows={4} required></textarea>
+                <textarea onChange={(e) => { setPostText(e.target.value) }} name="postText" placeholder='Add a post...' rows={4} value={postText} required></textarea>
                 {imageSrc ? <img style={{ "width": "100%" }} src={imageSrc} /> : imageSrc}
                 <div style={{ "display": "flex", "justifyContent": "space-between" }}>
                     <div style={{ "display": "flex", "gap": "1rem" }}>

@@ -1,5 +1,6 @@
 .post {
     border: 2px green solid;
+    width: 100%;
     max-width: 750px;
     padding: 0.5rem;
 }
@@ -37,4 +38,9 @@
 
 .post-add-comments>div:last-child {
     text-align: end;
+}
+
+.post textarea {
+    width: 100%;
+    padding: 0.5rem;
 }
