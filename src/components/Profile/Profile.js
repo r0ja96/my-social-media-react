@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { lastAccounts, selectLastAccounts } from "../../store/reducers/lastAccountsReducer";
 import { useNavigate } from "react-router-dom";
 
-function Profile({ profileType, profileData }) {
+function Profile({ profileType, profileData, deleteFun }) {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -27,8 +27,7 @@ function Profile({ profileType, profileData }) {
         case 'post':
             description = <>
                 <div><label>{name}</label></div>
-                <div><label>Online</label></div>
-                <div><label>12:00 PM 01/01/22</label></div>
+                <div><label>{date}</label></div>
             </>
             profileBtn = (
                 <>
@@ -36,14 +35,14 @@ function Profile({ profileType, profileData }) {
                         <a>Edit</a>
                     </div>
                     <div>
-                        <a>Delete</a>
+                        <a onClick={deleteFun}>Delete</a>
                     </div>
-                </>);
+                </>
+            );
             break;
         case 'postFriend':
             description = <>
                 <div><label>{name}</label></div>
-                <div><label>Online</label></div>
                 <div><label>{date}</label></div>
             </>
             break;
@@ -57,7 +56,7 @@ function Profile({ profileType, profileData }) {
         case 'friend':
             description = <>
                 <div><label>{name}</label></div>
-                <div><label>Online</label></div>
+                <div><label>Chat</label></div>
             </>
     }
 

@@ -5,8 +5,12 @@ import likeApi from '../../api/likeApi';
 import unlikeApi from '../../api/unlikeApi';
 import addCommentApi from '../../api/addCommentApi';
 import getPostApi from '../../api/getPostApi';
+import deletePostApi from '../../api/deletePostApi';
 import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { friendsPosts, selectFriendsPosts } from "../../store/reducers/friendsPostsReducer";
+
 
 function Post({ postData, profileData, comments }) {
 
@@ -21,6 +25,7 @@ function Post({ postData, profileData, comments }) {
     const [commentComponents, setCommentComponents] = useState([]);
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const mapComments = (commentsData) => {
         const commentsArr = commentsData.map((data) => {
@@ -39,12 +44,12 @@ function Post({ postData, profileData, comments }) {
                 getPostData.data.forEach(d => {
                     console.log(d)
                     const { _id, text, postDate, like, image, account } = d;
-                    const { name, lastName } = account;
+                    const { name, lastName, isAccountPost } = account;
 
                     let date = new Date(postDate);
                     date = date.toLocaleString();
 
-                    setProfileDataHook({ _id: account._id, name: `${name} ${lastName}`, date });
+                    setProfileDataHook({ _id: account._id, name: `${name} ${lastName}`, date, isAccountPost });
                     setImageSrc(image ? `http://localhost:4400/image/${account._id}/${image}` : null);
                     setLikes(like.likes);
                     setIslike(like.like);
@@ -71,7 +76,6 @@ function Post({ postData, profileData, comments }) {
 
     const unlikePost = async () => {
         const unlikeData = await unlikeApi({ postID });
-        console.log(unlikeApi);
         updatePost(unlikeData);
     }
 
@@ -86,10 +90,15 @@ function Post({ postData, profileData, comments }) {
         updatePost(commentData);
     }
 
+    const deletePost = async () => {
+        const deletePostData = await deletePostApi({ postID });
+        dispatch(friendsPosts());
+    }
+
     return (
         <div className='post'>
             <div>
-                <Profile profileType={'postFriend'} profileData={profileDataHook} />
+                <Profile profileType={profileDataHook.isAccountPost ? 'post' : 'postFriend'} profileData={profileDataHook} deleteFun={deletePost} />
             </div>
             <div>
                 <p>

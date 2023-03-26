@@ -39,12 +39,12 @@ function PostPage() {
         if (status === "Success") {
             const postArray = data.map((d) => {
                 const { _id, text, image, like, postDate, account, comments } = d;
-                const { name, lastName } = account;
-
+                const { name, lastName, isAccountPost } = account;
+                console.log(isAccountPost);
                 let date = new Date(postDate);
                 date = date.toLocaleString();
 
-                return <Post key={_id} comments={comments} postData={{ like, postID: _id, text, imageUrl: image ? `http://localhost:4400/image/${account._id}/${image}` : null }} profileData={{ name: `${name} ${lastName}`, date }} />;
+                return <Post key={_id} comments={comments} postData={{ like, postID: _id, text, imageUrl: image ? `http://localhost:4400/image/${account._id}/${image}` : null }} profileData={{ name: `${name} ${lastName}`, date, isAccountPost }} />;
             });
 
             setPost(postArray)
