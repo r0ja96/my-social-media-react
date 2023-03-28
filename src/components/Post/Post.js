@@ -1,6 +1,5 @@
 import Profile from '../Profile/Profile';
 import Comment from '../Comment/Comment';
-import AddPost from '../AddPost/AddPost';
 import './Post.css';
 import likeApi from '../../api/likeApi';
 import unlikeApi from '../../api/unlikeApi';
@@ -17,10 +16,13 @@ function Post({ postData, profileData, comments }) {
 
     const { postID, text, imageUrl, like } = postData;
 
+    const [editPost, setEditPost] = useState(false);
+    const [editPostText, setEditpostText] = useState(text);
     const [postText, setPostText] = useState(text);
     const [isLike, setIslike] = useState(like.like);
     const [likes, setLikes] = useState(like.likes);
     const [imageSrc, setImageSrc] = useState(imageUrl);
+    const [editImageSrc, setEditImageSrc] = useState(imageUrl);
     const [profileDataHook, setProfileDataHook] = useState(profileData);
     const [commentInput, setCommentInput] = useState('');
     const [commentComponents, setCommentComponents] = useState([]);
@@ -96,29 +98,77 @@ function Post({ postData, profileData, comments }) {
         dispatch(friendsPosts());
     }
 
-    const editPost = async (event) => {
+    const clickEditPostFun = async () => {
+        setEditPost(true);
+        setEditpostText(postText);
+        setEditImageSrc(imageSrc);
+    }
+
+    const displayImage = (e) => {
+        const blob = e.target.files[0];
+        if (blob) {
+            setEditImageSrc(URL.createObjectURL(e.target.files[0]));
+        }
+    }
+
+    const editPostFun = async (event) => {
+
         event.preventDefault();
-        console.log('editpost');
+
+        const formData = new FormData();
+        if (editImageSrc) {
+            const image = await fetch(editImageSrc);
+            const blob = await image.blob();
+            formData.append("image", blob);
+        }
+
+        formData.append("text", editPostText);
+
+        console.log('Form', formData);
+        /*const addPostData = await addPostApi(formData);
+        const { message, data, status } = addPostData;
+        if (status === "Success") {
+            setImageSrc(null);
+            setPostText('');
+            dispatch(friendsPosts());
+        } else if (['Token expired', 'Missing token'].includes(message)) {
+            navigate('/');
+        }*/
     }
 
     return (
         <div className='post'>
             <div>
-                <Profile profileType={profileDataHook.isAccountPost ? 'post' : 'postFriend'} profileData={profileDataHook} deleteFun={deletePost} editFun={editPost}/>
+                <Profile profileType={profileDataHook.isAccountPost ? 'post' : 'postFriend'} profileData={profileDataHook} deleteFun={deletePost} editFun={clickEditPostFun} />
             </div>
-            <AddPost text={postText} imgSrc={imageSrc} editFun={editPost}/>
-            <div>
-                <p>
-                    {postText}
-                </p>
-            </div>
-            <div className='post-image'>
-                {imageSrc && <img src={imageSrc} />}
-            </div>
-            <div className='post-like'>
-                {isLike ? <button onClick={unlikePost}>Liked</button> : <button onClick={likePost}>Like</button>}
-                <h1>{likes}</h1>
-            </div>
+            {editPost ?
+                <>
+                    <form onSubmit={editPostFun}>
+                        <textarea onChange={(e) => { setEditpostText(e.target.value) }} value={editPostText} required></textarea>
+                        {editImageSrc ? <img style={{ "width": "100%" }} src={editImageSrc} /> : null}
+                        <label style={{ "textAlign": "center" }} className='social-media-btn'> Add image
+                            <input name='file' style={{ "display": "none" }} type="file" accept=".png, .jpg, .jpeg" onChange={(e) => { displayImage(e); }} />
+                        </label>
+                        {editImageSrc ? <button type='button' onClick={() => { setEditImageSrc(null) }}>Remove</button> : editImageSrc}
+                        <input type='submit' value='Edit post' />
+                        <button onClick={() => { setEditPost(false); }} type='button'>cancel</button>
+                    </form>
+                </>
+                : <>
+                    <div>
+                        <p>
+                            {postText}
+                        </p>
+                    </div>
+                    <div className='post-image'>
+                        {imageSrc && <img src={imageSrc} />}
+                    </div>
+                    <div className='post-like'>
+                        {isLike ? <button onClick={unlikePost}>Liked</button> : <button onClick={likePost}>Like</button>}
+                        <h1>{likes}</h1>
+                    </div>
+                </>
+            }
             <div className='post-comments'><h2>Comments</h2></div>
             <div>
                 {commentComponents}

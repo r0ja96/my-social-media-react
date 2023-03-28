@@ -5,10 +5,10 @@ import addPostApi from '../../api/addPostApi';
 import { friendsPosts } from "../../store/reducers/friendsPostsReducer";
 import './AddPost.css';
 
-function AddPost({imgSrc, text, editPost}) {
+function AddPost() {
 
-    const [imageSrc, setImageSrc] = useState(imgSrc?imgSrc:null);
-    const [postText, setPostText] = useState(text?text:'');
+    const [imageSrc, setImageSrc] = useState(null);
+    const [postText, setPostText] = useState('');
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -47,7 +47,7 @@ function AddPost({imgSrc, text, editPost}) {
 
     return (
         <div className="addPost">
-            <form onSubmit={editPost?editPost:addPost}>
+            <form onSubmit={addPost}>
                 <textarea onChange={(e) => { setPostText(e.target.value) }} name="postText" placeholder='Add a post...' rows={4} value={postText} required></textarea>
                 {imageSrc ? <img style={{ "width": "100%" }} src={imageSrc} /> : imageSrc}
                 <div style={{ "display": "flex", "justifyContent": "space-between" }}>
