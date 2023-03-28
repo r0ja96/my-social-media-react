@@ -1,5 +1,6 @@
 import Profile from '../Profile/Profile';
 import Comment from '../Comment/Comment';
+import AddPost from '../AddPost/AddPost';
 import './Post.css';
 import likeApi from '../../api/likeApi';
 import unlikeApi from '../../api/unlikeApi';
@@ -95,11 +96,17 @@ function Post({ postData, profileData, comments }) {
         dispatch(friendsPosts());
     }
 
+    const editPost = async (event) => {
+        event.preventDefault();
+        console.log('editpost');
+    }
+
     return (
         <div className='post'>
             <div>
-                <Profile profileType={profileDataHook.isAccountPost ? 'post' : 'postFriend'} profileData={profileDataHook} deleteFun={deletePost} />
+                <Profile profileType={profileDataHook.isAccountPost ? 'post' : 'postFriend'} profileData={profileDataHook} deleteFun={deletePost} editFun={editPost}/>
             </div>
+            <AddPost text={postText} imgSrc={imageSrc} editFun={editPost}/>
             <div>
                 <p>
                     {postText}

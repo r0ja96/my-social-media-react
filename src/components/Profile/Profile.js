@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { lastAccounts, selectLastAccounts } from "../../store/reducers/lastAccountsReducer";
 import { useNavigate } from "react-router-dom";
 
-function Profile({ profileType, profileData, deleteFun }) {
+function Profile({ profileType, profileData, deleteFun, editFun }) {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -32,7 +32,7 @@ function Profile({ profileType, profileData, deleteFun }) {
             profileBtn = (
                 <>
                     <div>
-                        <a>Edit</a>
+                        <a onClick={editFun}>Edit</a>
                     </div>
                     <div>
                         <a onClick={deleteFun}>Delete</a>
