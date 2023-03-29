@@ -3,6 +3,7 @@ import Comment from '../Comment/Comment';
 import './Post.css';
 import likeApi from '../../api/likeApi';
 import unlikeApi from '../../api/unlikeApi';
+import editPostApi from '../../api/editPostApi';
 import addCommentApi from '../../api/addCommentApi';
 import getPostApi from '../../api/getPostApi';
 import deletePostApi from '../../api/deletePostApi';
@@ -121,10 +122,13 @@ function Post({ postData, profileData, comments }) {
             const blob = await image.blob();
             formData.append("image", blob);
         }
-
+        formData.append("postID", postID);
         formData.append("text", editPostText);
 
-        console.log('Form', formData);
+       const editPostData = await editPostApi(formData);
+       await updatePost(editPostData);
+       setEditPost(false);
+
         /*const addPostData = await addPostApi(formData);
         const { message, data, status } = addPostData;
         if (status === "Success") {
