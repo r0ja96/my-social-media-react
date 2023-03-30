@@ -15,16 +15,16 @@ export const friends = createAsyncThunk(
 )
 
 export const friendsSlice = createSlice({
-    name:'friends',
+    name: 'friends',
     initialState,
     extraReducers: (builder) => {
-        builder.addCase(friends.fulfilled, (state, action) =>{
+        builder.addCase(friends.fulfilled, (state, action) => {
             state.data = action.payload.data;
             state.status = action.payload.status;
             state.message = action.payload.message;
         })
     }
-    
+
 });
 
 export const selectFriends = (state) => state.friends;
