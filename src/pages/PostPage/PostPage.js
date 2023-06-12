@@ -95,9 +95,9 @@ function PostPage() {
 
 
     return (
-        <div>
+        <div id='postPage'>
             <NavBar />
-            <div id="PostPage">
+            <div id="postPageContainer">
                 <div className="post-sidebar">
                     <div>
                         <h2>New People</h2>

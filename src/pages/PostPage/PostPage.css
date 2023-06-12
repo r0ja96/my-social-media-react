@@ -1,18 +1,24 @@
-#PostPage {
+#postPage {
     height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+#postPageContainer {
     display: grid;
     grid-template-columns: 200px 1fr 200px;
     background-color: var(--input-boder);
+    overflow-y: auto;
 }
 
-#PostPage>div {
-    height: 100%;
+#postPageContainer>div {
     border: 1px green solid;
+    overflow-y: auto;
 }
 
 #post {
     display: grid;
-    align-items: start;
+    align-content: start;
     justify-items: center;
     gap: 1rem;
     padding: 1rem;

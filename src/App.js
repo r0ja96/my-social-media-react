@@ -5,7 +5,7 @@ import PostPage from "./pages/PostPage/PostPage";
 
 function App() {
     return (
-        <div>
+        <div style={{ width: '100vw', height: '100vh' }}>
             <Routes>
                 <Route path="/" element={<LogInPage />} />
                 <Route path="/post" element={<PostPage />} />
